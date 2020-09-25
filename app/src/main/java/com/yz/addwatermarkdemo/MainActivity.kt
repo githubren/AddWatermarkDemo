@@ -63,29 +63,35 @@ class MainActivity : AppCompatActivity() {
         val canvas = Canvas(newBitmap)
         canvas.drawBitmap(bitmap!!,0f,0f,null)
         canvas.save()
-        val paint = Paint(Paint.ANTI_ALIAS_FLAG)
-        paint.color = Color.parseColor("#${srcs[1].logoInfo[0].color}")
+//        canvas.setBitmap(logo)
+        val paint = Paint()
+        val colors = IntArray(2)
+        colors[0] = Color.parseColor("#ffff00")
+        colors[1] = Color.parseColor("#ffff00")
+        paint.shader = LinearGradient(0f, 0f, 310f, 310f,colors,null, Shader.TileMode.CLAMP)
+//        paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC_IN)
 //        paint.style = Paint.Style.STROKE
 
 //        val logoBitmap = Bitmap.createBitmap(srcs[0].logoInfo[0].logoWidth,srcs[0].logoInfo[0].logoHeight,Bitmap.Config.ARGB_8888)
 //        canvas.drawBitmap(logoBitmap,srcs[0].logoInfo[0].startX.toFloat(),srcs[0].logoInfo[0].startY.toFloat(),null)
 
 //        canvas.rotate(srcs[0].logoInfo[0].rotate.toFloat())srcRect
-        val desRect = Rect(srcs[0].logoInfo[0].startX,srcs[0].logoInfo[0].startY,srcs[0].logoInfo[0].startX+(srcs[0].logoInfo[0].logoWidth)/2,srcs[0].logoInfo[0].startY+(srcs[0].logoInfo[0].logoHeight)/2)
-        val srcRect = Rect(0,0,srcs[0].logoInfo[0].logoWidth,srcs[0].logoInfo[0].logoHeight)
-        Log.e("TAG","logo width:${logo?.width}")
-        Log.e("TAG","logo height:${logo?.height}")
-        canvas.drawBitmap(logo!!,srcRect,desRect,null)
+            val desRect = Rect(srcs[0].logoInfo[0].startX,srcs[0].logoInfo[0].startY,srcs[0].logoInfo[0].startX+(srcs[0].logoInfo[0].logoWidth),srcs[0].logoInfo[0].startY+(srcs[0].logoInfo[0].logoHeight))
+            val srcRect = Rect(0,0,310,310)
+            Log.e("TAG","logo width:${logo?.width}")
+            Log.e("TAG","logo height:${logo?.height}")
+//        canvas.drawRect(100f,187f,186f,187f+86f,paint)
+            canvas.drawBitmap(logo!!,srcRect,desRect,paint)
 //        canvas.drawBitmap(logo!!,srcs[0].logoInfo[0].startX.toFloat(),srcs[0].logoInfo[0].startY.toFloat(),paint)
-        canvas.save()
-        canvas.restore()
-        return newBitmap
+            canvas.save()
+            canvas.restore()
+            return newBitmap
     }
 
     private fun initData() {
         srcs.add(WatermarkData(540,"http://qiniu.yuzhua.info/toolbox/20200925/6fd6bbff15993d27858935eb5e136f61.png",850,
             arrayListOf(
-                LogoInfo("000000",310,"http://toolbox.yuzhua-test.com/client/img/logo.6cf8570.png",310,40,0,100,187),
+                LogoInfo("000000",86,"http://toolbox.yuzhua-test.com/client/img/logo.6cf8570.png",86,40,0,100,187),
                 LogoInfo("000000",86,"http://toolbox.yuzhua-test.com/client/img/logo.6cf8570.png",86,40,0,324,187),
                 LogoInfo("000000",86,"http://toolbox.yuzhua-test.com/client/img/logo.6cf8570.png",86,40,0,324,187),
                 LogoInfo("000000",86,"http://toolbox.yuzhua-test.com/client/img/logo.6cf8570.png",86,40,0,324,187)
