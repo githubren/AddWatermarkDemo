@@ -18,6 +18,8 @@ import android.graphics.Bitmap
 import android.graphics.ColorMatrixColorFilter
 import android.graphics.ColorMatrix
 import android.util.Log
+import com.blankj.utilcode.util.NumberUtils
+import java.text.NumberFormat
 
 
 class MainActivity : AppCompatActivity() {
@@ -65,29 +67,23 @@ class MainActivity : AppCompatActivity() {
         canvas.drawBitmap(bitmap!!,0f,0f,null)
         canvas.save()
         val paint = Paint()
-        //红绿反色
+        val rs = srcs[0].logoInfo[0].color.substring(0,2)
+        Log.e("TAG","r:$rs")
+        val ri = rs.toInt(16)
+        Log.e("TAG","ri:$ri")
+        val r = ri.toFloat().div(255f)
+        Log.e("TAG","r:$r")
+        val g = srcs[0].logoInfo[0].color.substring(2,4).toInt(16).toFloat().div(255f)
+        val b = srcs[0].logoInfo[0].color.substring(4,6).toInt(16).toFloat().div(255f)
+        val a = srcs[0].logoInfo[0].opacity.toFloat()/100
+        Log.e("TAG","a:$a")
+        //颜色矩阵
         val rtog = ColorMatrix(
             floatArrayOf(
-                1f,
-                0f,
-                0f,
-                0f,
-                0f,
-                0f,
-                0f,
-                0f,
-                0f,
-                0f,
-                0f,
-                0f,
-                0f,
-                0f,
-                0f,
-                0f,
-                0f,
-                0f,
-                1f,
-                0f
+                r, 0f, 0f, 0f, 0f,//RED
+                0f, g, 0f, 0f, 0f,//GREEN
+                0f, 0f, b, 0f, 0f,//BLUE
+                0f, 0f, 0f, a, 0f//ALPHA
             ))
         val colorArray = rtog.array
         colorArray.forEach {
@@ -100,6 +96,7 @@ class MainActivity : AppCompatActivity() {
         val matrix = Matrix()
         matrix.postRotate(srcs[0].logoInfo[0].rotate.toFloat())
         matrix.postScale(scaleX, scaleY)
+
         matrix.postTranslate(
             srcs[0].logoInfo[0].startX.toFloat(),
             srcs[0].logoInfo[0].startY.toFloat()
@@ -113,7 +110,7 @@ class MainActivity : AppCompatActivity() {
     private fun initData() {
         srcs.add(WatermarkData(540,"http://qiniu.yuzhua.info/toolbox/20200925/6fd6bbff15993d27858935eb5e136f61.png",850,
             arrayListOf(
-                LogoInfo("000000",86,"http://toolbox.yuzhua-test.com/client/img/logo.6cf8570.png",86,0,45,100,187),
+                LogoInfo("666666",86,"http://toolbox.yuzhua-test.com/client/img/logo.6cf8570.png",86,10,45,100,187),
                 LogoInfo("000000",86,"http://toolbox.yuzhua-test.com/client/img/logo.6cf8570.png",86,40,0,324,187)/*,
                 LogoInfo("000000",86,"http://toolbox.yuzhua-test.com/client/img/logo.6cf8570.png",86,40,0,324,187),
                 LogoInfo("000000",86,"http://toolbox.yuzhua-test.com/client/img/logo.6cf8570.png",86,40,0,324,187)*/
