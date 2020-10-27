@@ -23,6 +23,18 @@ allprojects {
     }
 }
 
+subprojects {
+    afterEvaluate {
+        project ->
+            if (project.hasProperty("android")) {
+                android {
+                    compileSdkVersion = rootProject.compileSdkVersion
+                    buildToolsVersion = rootProject.buildToolsVersion
+                }
+            }
+    }
+}
+
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
