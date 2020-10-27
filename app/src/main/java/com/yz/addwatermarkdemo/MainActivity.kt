@@ -1,5 +1,8 @@
 package com.yz.addwatermarkdemo
 
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
+import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.graphics.*
 import androidx.appcompat.app.AppCompatActivity
@@ -18,8 +21,9 @@ import android.graphics.Bitmap
 import android.graphics.ColorMatrixColorFilter
 import android.graphics.ColorMatrix
 import android.util.Log
-import com.blankj.utilcode.util.NumberUtils
-import java.text.NumberFormat
+import android.view.animation.AccelerateInterpolator
+import android.view.animation.DecelerateInterpolator
+import com.blankj.utilcode.util.ToastUtils
 
 
 class MainActivity : AppCompatActivity() {
@@ -57,6 +61,25 @@ class MainActivity : AppCompatActivity() {
                         runOnUiThread {  original_img.setImageBitmap(addWatermark(resource)) }
                     }
                 })
+        }
+
+
+        btn.setOnClickListener { view ->
+            val t1 = ValueAnimator.ofFloat(10f,-10f)
+            t1.duration = 150
+            t1.interpolator = AccelerateInterpolator()
+            t1.addUpdateListener {
+                view.translationZ = it.animatedValue as Float
+            }
+            val t2 = ValueAnimator.ofFloat(-10f,10f)
+            t2.duration = 150
+            t2.interpolator = DecelerateInterpolator()
+            t2.addUpdateListener {
+                view.translationZ = it.animatedValue as Float
+            }
+            val animatorSet = AnimatorSet()
+            animatorSet.playSequentially(t1,t2)
+            animatorSet.start()
         }
     }
 

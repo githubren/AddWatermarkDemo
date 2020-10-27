@@ -23,3 +23,8 @@ data class LogoInfo(
     val startX: Int,
     val startY: Int
 )
+
+
+data class Test<T>(
+    val t:T
+)
